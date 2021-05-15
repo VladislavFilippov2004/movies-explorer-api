@@ -30,5 +30,5 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 app.listen(PORT, () => {
-  console.log('app start', NODE_ENV);
+  console.log('App start. NODE_ENV=', NODE_ENV);
 });
