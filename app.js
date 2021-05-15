@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
@@ -8,6 +9,8 @@ const auth = require('./middlewares/auth.js');
 const errorHandler = require('./middlewares/error-handler.js');
 const { requestLogger, errorLogger } = require('./middlewares/logger.js');
 const { validateCreateUser, validateLogin } = require('./middlewares/validations.js');
+
+const { NODE_ENV } = process.env;
 
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
@@ -27,5 +30,5 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 app.listen(PORT, () => {
-  console.log('app start');
+  console.log('app start', NODE_ENV);
 });
