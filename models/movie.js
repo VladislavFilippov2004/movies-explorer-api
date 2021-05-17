@@ -30,15 +30,31 @@ const movieSchema = new mongoose.Schema({
       message: 'Введите url',
     },
   },
+  trailer: {
+    type: String,
+    required: true,
+    validate: {
+      validator: (v) => validator.isURL(v),
+      message: 'Введите url',
+    },
+  },
+  thumbnail: {
+    type: String,
+    required: true,
+    validate: {
+      validator: (v) => validator.isURL(v),
+      message: 'Введите url',
+    },
+  },
   movieId: {
     type: Number,
     required: true,
   },
-  nameRu: {
+  nameRU: {
     type: String,
     required: true,
   },
-  nameEn: {
+  nameEN: {
     type: String,
     required: true,
   },

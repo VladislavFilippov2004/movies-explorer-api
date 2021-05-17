@@ -19,12 +19,13 @@ const limiter = rateLimit({
   max: 100,
 });
 
-mongoose.connect(DB_CONN, {
+mongoose.connect(NODE_ENV === 'production' ? DB_CONN : 'mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
+
 const { PORT = 3000 } = process.env;
 const app = express();
 app.use(bodyParser.json());
@@ -40,5 +41,5 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 app.listen(PORT, () => {
-  console.log('App start. NODE_ENV=', NODE_ENV);
+  console.log('App start. NODE_ENV=', NODE_ENV, DB_CONN);
 });

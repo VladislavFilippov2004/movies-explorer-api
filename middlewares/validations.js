@@ -30,9 +30,10 @@ const validateCreateUser = celebrate({
         'string.min': 'Пароль не может быть короче 6-ти символов',
         'string.empty': 'Поле password должно быть заполнено',
       }),
-    name: Joi.string().required()
+    name: Joi.string().required().min(2)
       .messages({
         'any.required': 'Поле name должно быть заполнено',
+        'string.min': 'Иям не может быть короче двух символов',
       }),
   }),
 });
@@ -51,6 +52,12 @@ const validateUpdateProfile = celebrate({
       .messages({
         'string.empty': 'Введите имя',
         'any.required': 'Поле name должно быть заполнено',
+      }),
+    email: Joi.string().required().email()
+      .messages({
+        'any.required': 'Отсутствует поле email',
+        'string.email': 'Необходимо указать email в корректном формате',
+        'string.empty': 'Поле email должно быть заполнено',
       }),
   }),
 });
@@ -86,23 +93,50 @@ const validateCreateMovie = celebrate({
         'any.required': 'Отсутсвует поле description',
         'string.empty': 'Поле description должно быть заполнено',
       }),
-    image: Joi.string().required().custom((value, helpers) => {
-      if (validator.isURL(value)) {
-        return value;
-      }
-      return helpers.message('Невалидный URL');
-    }),
+    image: Joi.string().required()
+      .messages({
+        'any.required': 'Отсутсвует картинка',
+        'string.empty': 'Поле image должно быть заполнено',
+      })
+      .custom((value, helpers) => {
+        if (validator.isURL(value)) {
+          return value;
+        }
+        return helpers.message('Невалидный URL картинки');
+      }),
+    trailer: Joi.string().required()
+      .messages({
+        'any.required': 'Отсутсвует trailer',
+        'string.empty': 'Поле trailer должно быть заполнено',
+      })
+      .custom((value, helpers) => {
+        if (validator.isURL(value)) {
+          return value;
+        }
+        return helpers.message('Невалидный URL трейлера');
+      }),
+    thumbnail: Joi.string().required()
+      .messages({
+        'any.required': 'Отсутсвует thumbanail',
+        'string.empty': 'Поле thumbnail должно быть заполнено',
+      })
+      .custom((value, helpers) => {
+        if (validator.isURL(value)) {
+          return value;
+        }
+        return helpers.message('Невалидный URL трейлера');
+      }),
     movieId: Joi.number().required()
       .messages({
         'any.required': 'Отсутствует поле movieId',
         'string.empty': 'Поле movieId должно быть заполнено',
       }),
-    nameRu: Joi.string().required()
+    nameRU: Joi.string().required()
       .messages({
         'any.required': 'Отсутствует поле nameRu',
         'string.empty': 'Поле nameRu должно быть заполено',
       }),
-    nameEn: Joi.string().required()
+    nameEN: Joi.string().required()
       .messages({
         'any.required': 'Отстутствует поле nameEn',
         'string.empty': 'Поле nameEn должно быть заполнено',

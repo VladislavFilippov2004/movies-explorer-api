@@ -29,7 +29,8 @@ const deleteMovie = (req, res, next) => {
         Movie.findByIdAndRemove(movie)
           .then(() => {
             res.status(200).send({ message: 'Фильм успешно удалён' });
-          });
+          })
+          .catch((err) => next(err));
       } else {
         throw new Forbidden('Нельзя удалять чужие карточки');
       }
