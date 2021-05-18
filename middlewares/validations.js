@@ -153,7 +153,7 @@ const validateDeleteMovie = celebrate({
     authorization: Joi.string().max(200).required(),
   }).unknown(),
   params: Joi.object().keys({
-    cardId: Joi.string().required().custom((value, helpers) => {
+    movieId: Joi.string().required().custom((value, helpers) => {
       if (ObjectId.isValid(value)) {
         return value;
       }
